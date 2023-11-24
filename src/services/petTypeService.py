@@ -7,3 +7,4 @@ app = Blueprint('pet_type',__name__,url_prefix='/pet_type')
 
 schema = PetTypeSchema()
 schemas = PetTypeSchema(many=True)
+
