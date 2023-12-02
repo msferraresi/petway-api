@@ -11,7 +11,13 @@ schemas = ProductSchema(many=True)
 
 @app.route('', methods=['GET'])
 def get_products():
-    lst_products = Product.query.options(joinedload(Product.unit)).order_by(Product.name.asc()).filter_by(deleted_at=None).all()
+    search_term = request.args.get('search', None)
+    print(search_term)
+    query = Product.query.options(joinedload(Product.unit)).order_by(Product.name.asc()).filter_by(deleted_at=None)
+    if search_term:
+        query = query.filter(Product.name.ilike(f"%{search_term}%"))
+
+    lst_products = query.all()
     if not lst_products:
         return jsonify({'message': 'No products found'}), 404
     else:
