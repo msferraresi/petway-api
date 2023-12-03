@@ -18,6 +18,7 @@ class DevelopmentConfig(Config):
     Config.SECRET_KEY = 'dev'
     Config.PORT_APP = 5001
     Config.SERVER_NAME = 'localhost:5001'
+    UPLOAD_FOLDER = 'uploads'
     USER_DB = 'root'
     PASS_DB = 'Lepo1867'
     HOST_DB = 'localhost'

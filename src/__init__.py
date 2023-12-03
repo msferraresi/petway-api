@@ -1,3 +1,4 @@
+import os
 from flask_jwt_extended import JWTManager
 from werkzeug.utils import find_modules, import_string
 from flask import Flask
@@ -32,6 +33,9 @@ def create_app(environment=None):
     with app.app_context():
         create_initial_data()
 
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
+        
     return app
 
 def register_blueprint(app):
