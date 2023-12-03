@@ -28,13 +28,27 @@ def get_products():
     if not lst_products:
         return jsonify({'message': 'No products found'}), 404
     else:
-        return jsonify({'products':schema.dump(lst_products, many=True)}), 200
+        products_with_images = []
+        
+        for product in lst_products:
+            image_path = f"{confi.config['UPLOAD_FOLDER']}/{product.photo_name}"
+            product_data = schema.dump(product)
+            
+            if os.path.exists(image_path):
+                with open(image_path, 'rb') as image_file:
+                    image_content = image_file.read()
+
+                image_base64 = base64.b64encode(image_content).decode('utf-8')
+                product_data['image'] = image_base64
+            
+            products_with_images.append(product_data)
+            
+            
+        return jsonify({'products': products_with_images}), 200
+        #return jsonify({'products':schema.dump(lst_products, many=True)}), 200
 
 @app.route('/<int:product_id>', methods=['GET'])
 def get_product(product_id):
-    valid = Flask(__name__)
-    valid.config.from_object('config.configProd.ProductionConfig')
-    print(valid.config['UPLOAD_FOLDER'])
     product = Product.query.options(joinedload(Product.unit)).filter_by(id=product_id, deleted_at=None).first()
     if not product:
         return jsonify({'message': 'No product found'}), 404
