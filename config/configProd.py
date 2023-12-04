@@ -18,6 +18,7 @@ class ProductionConfig(Config):
     Config.SECRET_KEY = 'prod'
     Config.PORT_APP = 5000
     Config.SERVER_NAME = 'localhost:5000'
+    UPLOAD_FOLDER = 'uploads'
     USER_DB = 'root'
     PASS_DB = 'Lepo1867'
     HOST_DB = 'localhost'
