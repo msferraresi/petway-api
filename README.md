@@ -42,13 +42,28 @@ El mismo va a tomar las dependencias que encuentre y las va actualizar en el arc
 
 
 ## Configuración de la Base de Datos
-Antes de ejecutar la aplicación, asegúrate de configurar la conexión a tu base de datos en el archivo config.py. Proporciona la URL de conexión y cualquier otra configuración necesaria.
+Antes de ejecutar la aplicación, asegúrate de configurar la conexión a tu base de datos en el archivo configXXXX.py. Proporciona la informacion solicitada de conexión y cualquier otra configuración necesaria.
 
 ```bash
-# config.py
+# configXXXX.py
 
-DATABASE_URI = "tu_url_de_base_de_datos"
+    Config.ENV = 'Ambiente donde se va a trabajar'
+    Config.DEBUG = 'Valor boolean (True/False) para activar el modo debug'
+    Config.TESTING = 'Valor boolean (True/False) para activar el modo debug'
+    Config.SECRET_KEY = 'Valor secreto para desbloquear la consola'
+    Config.PORT_APP = 'Valor numérico del puerto donde se va a ejecutar la api'
+    Config.SERVER_NAME = 'Nombre del servidor'
+    USER_DB = 'Usuario para acceder a la base de datos'
+    PASS_DB = 'Clave para acceder a la base de datos'
+    HOST_DB = 'Servidor donde se encuentra la base de datos'
+    PORT_DB = 'Puerto en el que corre la base de datos'
+    NAME_DB = 'Nombre de la base de datos'
+
+# No es necesario alterar la siguiente linea, ya que toma los datos de los provistos anteriormente.
+    SQLALCHEMY_DATABASE_URI= 'mysql+pymysql://{}:{}@{}:{}/{}'.format(USER_DB,PASS_DB,HOST_DB,PORT_DB,NAME_DB)
 ```
+Antes de pasar a ejecutar la aplicación hay que asegurarse que la DB se encuentra creada en el servidor, una vez verificado esto y configurado el archivo de configuracion pertinente se puede mandar a correr la aplicacion, no se
+preocupe por las tablas ya que el ORM se encarga de crear las que haga falta o modificar las existentes.
 
 ## Ejecutar la Aplicación
 Una vez que has configurado el entorno virtual, instalado las dependencias y configurado la base de datos, puedes ejecutar la aplicación con el siguiente comando:
@@ -64,9 +79,8 @@ La aplicación se ejecutará en `http://127.0.0.1:5000/` por defecto.
 ## Endpoints
 La API proporciona los siguientes endpoints:
 
-* `/api/productos`: Obtiene la lista de productos.
-* `/api/productos/{id}`: Obtiene detalles de un producto específico.
-* `/api/carrito`: Gestiona el carrito de compras.
+* `/question/create`: [POST] permite almacenar en la base de datos las consultas realizadas.
+
 
 Otros endpoints según las necesidades específicas del proyecto.
 
